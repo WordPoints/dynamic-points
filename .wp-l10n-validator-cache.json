@@ -1,0 +1,40 @@
+{
+    "files": {
+        "\/admin\/includes\/actions.php": {
+            "size": 328,
+            "hash": "d3c39104ef84853d8147d1b79d943142",
+            "errors": false
+        },
+        "\/admin\/includes\/functions.php": {
+            "size": 1880,
+            "hash": "4e22fd8e1859297764a3fabdd7f83752",
+            "errors": false
+        },
+        "\/classes\/hook\/extension.php": {
+            "size": 4374,
+            "hash": "765e1b4eab6cfc663152271c50e5597d",
+            "errors": false
+        },
+        "\/classes\/index.php": {
+            "size": 264,
+            "hash": "28de55e30abea24a39bf5a69eedc44d7",
+            "errors": false
+        },
+        "\/dynamic-points.php": {
+            "size": 2239,
+            "hash": "a131f3add22c4d25ede6c1653717b03a",
+            "errors": false
+        },
+        "\/includes\/actions.php": {
+            "size": 241,
+            "hash": "d2aa5f799db60484728ae15df998ad94",
+            "errors": false
+        },
+        "\/includes\/functions.php": {
+            "size": 522,
+            "hash": "76e579dc3e8c4003d5970f41f7c4cfb5",
+            "errors": false
+        }
+    },
+    "config_signature": "21fc62406bcac8a2d58a079c971bae32"
+}

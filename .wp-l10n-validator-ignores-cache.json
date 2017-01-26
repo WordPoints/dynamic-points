@@ -1,0 +1,63 @@
+{
+    "\/admin\/includes\/functions.php": {
+        "version": {
+            "19": {
+                "name": "WordPoints_Modules::get_data",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 1,
+                "parentheses": 1
+            }
+        },
+        ".min": {
+            "21": false,
+            "22": false
+        },
+        ".manifested": {
+            "22": false
+        },
+        "wordpoints-dynamic-points-hooks-admin": {
+            "34": {
+                "name": "$styles->add_data",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 0,
+                "parentheses": 1
+            },
+            "37": {
+                "name": "$styles->add_data",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 0,
+                "parentheses": 1
+            }
+        },
+        "rtl": {
+            "34": {
+                "name": "$styles->add_data",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 1,
+                "parentheses": 1
+            }
+        },
+        "replace": {
+            "34": {
+                "name": "$styles->add_data",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 2,
+                "parentheses": 1
+            }
+        },
+        "suffix": {
+            "37": {
+                "name": "$styles->add_data",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 1,
+                "parentheses": 1
+            }
+        }
+    }
+}
