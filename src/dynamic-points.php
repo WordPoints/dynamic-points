@@ -46,4 +46,18 @@ WordPoints_Modules::register(
 
 WordPoints_Class_Autoloader::register_dir( dirname( __FILE__ ) . '/classes/' );
 
+/**
+ * The module's functions.
+ *
+ * @since 1.0.0
+ */
+require_once dirname( __FILE__ ) . '/includes/functions.php';
+
+/**
+ * Hook up the module's actions and filters.
+ *
+ * @since 1.0.0
+ */
+require_once dirname( __FILE__ ) . '/includes/actions.php';
+
 // EOF
