@@ -60,4 +60,21 @@ require_once dirname( __FILE__ ) . '/includes/functions.php';
  */
 require_once dirname( __FILE__ ) . '/includes/actions.php';
 
+if ( is_admin() ) {
+
+	/**
+	 * The module's admin-side functions.
+	 *
+	 * @since 1.0.0
+	 */
+	require_once dirname( __FILE__ ) . '/admin/includes/functions.php';
+
+	/**
+	 * Hook up the module's admin-side actions and filters.
+	 *
+	 * @since 1.0.0
+	 */
+	require_once dirname( __FILE__ ) . '/admin/includes/actions.php';
+}
+
 // EOF

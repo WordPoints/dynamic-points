@@ -1,0 +1,18 @@
+/**
+ * Hooks admin screen styles.
+ *
+ * @since 1.0.0
+ */
+.wordpoints-dynamic-points .enable,
+.wordpoints-dynamic-points .disable {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.wordpoints-dynamic-points .disable {
+  display: none;
+}
+
+.wordpoints-dynamic-points-settings {
+  display: none;
+}
