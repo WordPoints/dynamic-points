@@ -53,10 +53,10 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		);
 
 		$this->assertFalse( $validator->had_errors() );
-		$this->assertEmpty( $validator->get_field_stack() );
+		$this->assertSame( array(), $validator->get_field_stack() );
 		$this->assertNull( $event_args->get_current() );
 
-		$this->assertEquals( array( 'dynamic_points' => $settings ), $result );
+		$this->assertSame( array( 'dynamic_points' => $settings ), $result );
 	}
 
 	/**
@@ -113,12 +113,12 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		$errors = $validator->get_errors();
 
 		$this->assertCount( 1, $errors );
-		$this->assertEquals(
+		$this->assertSame(
 			array_merge( array( 'dynamic_points' ), $invalid )
 			, $errors[0]['field']
 		);
 
-		$this->assertEmpty( $validator->get_field_stack() );
+		$this->assertSame( array(), $validator->get_field_stack() );
 		$this->assertNull( $event_args->get_current() );
 
 		$this->assertSame( array(), $result );
@@ -189,7 +189,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		$fire = new WordPoints_Hook_Fire( $event_args, $reaction, 'test_fire' );
 
-		$this->assertEquals( 5, $extension->filter_points_to_award( 5, $fire ) );
+		$this->assertSame( 5, $extension->filter_points_to_award( 5, $fire ) );
 	}
 
 	/**
@@ -318,7 +318,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		$user_id = $this->fire_reactor( array(), $entity, $reactor );
 
-		$this->assertEquals(
+		$this->assertSame(
 			100 + $dynamic_points
 			, wordpoints_get_points( $user_id, 'points' )
 		);
@@ -340,7 +340,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		$user_id = $this->fire_reactor( array( 'points' => 10 ), $entity, $reactor );
 
-		$this->assertEquals(
+		$this->assertSame(
 			100 + 10
 			, wordpoints_get_points( $user_id, 'points' )
 		);
@@ -362,7 +362,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		$user_id = $this->fire_reactor( array(), $entity, $reactor );
 
-		$this->assertEquals(
+		$this->assertSame(
 			100 + $dynamic_points
 			, wordpoints_get_points( $user_id, 'points' )
 		);
@@ -384,7 +384,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		$user_id = $this->fire_reactor( array( 'points' => 10 ), $entity, $reactor );
 
-		$this->assertEquals(
+		$this->assertSame(
 			100 + 10
 			, wordpoints_get_points( $user_id, 'points' )
 		);
@@ -459,7 +459,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		wordpoints_set_points( $user_id, 100, 'points', 'test' );
 
-		$this->assertEquals( 100, wordpoints_get_points( $user_id, 'points' ) );
+		$this->assertSame( 100, wordpoints_get_points( $user_id, 'points' ) );
 
 		$reaction = $this->factory->wordpoints->hook_reaction->create( $settings );
 
