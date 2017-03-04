@@ -67,7 +67,15 @@ var DynamicPoints = Extension.extend({
 	getArgHierarchies: function ( event ) {
 		return Args.getHierarchiesMatching( {
 			event: event,
-			end:   { _type: 'attr', data_type: 'integer' }
+			end:   function ( arg ) {
+				return (
+					arg.get( '_type' ) === 'attr'
+					&& (
+						arg.get( 'data_type' ) === 'integer'
+						|| arg.get( 'data_type' ) === 'decimal_number'
+					)
+				);
+			}
 		} );
 	},
 

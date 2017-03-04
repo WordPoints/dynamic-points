@@ -22,9 +22,30 @@ class WordPoints_Dynamic_Points_Hook_Extension
 	protected $slug = 'dynamic_points';
 
 	/**
+	 * The rounding methods class registry.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var WordPoints_Class_RegistryI
+	 */
+	protected $rounding_methods;
+
+	/**
+	 * Whether the settings require that a rounding method be set.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var bool
+	 */
+	protected $requires_rounding;
+
+	/**
 	 * @since 1.0.0
 	 */
 	public function __construct() {
+
+		$this->rounding_methods = wordpoints_module( 'dynamic_points' )
+			->get_sub_app( 'rounding_methods' );
 
 		add_action(
 			'wordpoints_points_hook_reactor_points_to_award'
@@ -64,6 +85,8 @@ class WordPoints_Dynamic_Points_Hook_Extension
 			return null;
 		}
 
+		$this->requires_rounding = false;
+
 		$this->validator->push_field( 'arg' );
 
 		$settings['arg'] = $this->validate_dynamic_points_arg(
@@ -74,6 +97,30 @@ class WordPoints_Dynamic_Points_Hook_Extension
 
 		if ( ! $settings['arg'] ) {
 			return null;
+		}
+
+		if ( isset( $settings['rounding_method'] ) ) {
+
+			$this->validator->push_field( 'rounding_method' );
+
+			$settings['rounding_method'] = $this->validate_dynamic_points_rounding_method(
+				$settings['rounding_method']
+			);
+
+			if ( ! $settings['rounding_method'] ) {
+				unset( $settings['rounding_method'] );
+			}
+
+			$this->validator->pop_field();
+
+		} elseif ( $this->requires_rounding ) {
+
+			$this->validator->add_error(
+				__(
+					'A rounding method must be set when awarding dynamic points based on a decimal number value.'
+					, 'wordpoints-dynamic-points'
+				)
+			);
 		}
 
 		return $settings;
@@ -124,6 +171,38 @@ class WordPoints_Dynamic_Points_Hook_Extension
 	}
 
 	/**
+	 * Validate a rounding method.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $rounding_method The rounding method.
+	 *
+	 * @return string|false The validated rounding method, or false.
+	 */
+	protected function validate_dynamic_points_rounding_method( $rounding_method ) {
+
+		if ( ! is_string( $rounding_method ) ) {
+
+			$this->validator->add_error(
+				__( 'Invalid rounding method.', 'wordpoints-dynamic-points' )
+			);
+
+			return false;
+		}
+
+		if ( ! $this->rounding_methods->is_registered( $rounding_method ) ) {
+
+			$this->validator->add_error(
+				__( 'Invalid rounding method.', 'wordpoints-dynamic-points' )
+			);
+
+			return false;
+		}
+
+		return $rounding_method;
+	}
+
+	/**
 	 * Check that we can get a number from an arg to use as the dynamic points value.
 	 *
 	 * @since 1.0.0
@@ -138,11 +217,18 @@ class WordPoints_Dynamic_Points_Hook_Extension
 			return false;
 		}
 
-		if ( 'integer' !== $arg->get_data_type() ) {
-			return false;
+		$data_type = $arg->get_data_type();
+
+		if ( 'integer' === $data_type ) {
+			return true;
 		}
 
-		return true;
+		if ( 'decimal_number' === $data_type ) {
+			$this->requires_rounding = true;
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -156,11 +242,21 @@ class WordPoints_Dynamic_Points_Hook_Extension
 	 * @since 1.0.0
 	 */
 	public function get_ui_script_data() {
+
+		$rounding_methods = array();
+
+		/** @var WordPoints_Dynamic_Points_Rounding_MethodI $rounding_method */
+		foreach ( $this->rounding_methods->get_all() as $slug => $rounding_method ) {
+			$rounding_methods[ $slug ] = $rounding_method->get_title();
+		}
+
 		return array(
 			'arg_label' => __(
 				'Calculate Points Based On'
 				, 'wordpoints-dynamic-points'
 			),
+			'rounding_method_label' => __( 'Rounding Method', 'wordpoints-dynamic-points' ),
+			'rounding_methods' => $rounding_methods,
 		);
 	}
 
@@ -212,6 +308,23 @@ class WordPoints_Dynamic_Points_Hook_Extension
 		$arg = $fire->event_args->get_from_hierarchy( $settings['arg'] );
 
 		$value = $arg->get_the_value();
+
+		if ( empty( $value ) ) {
+			return $points;
+		}
+
+		if ( isset( $settings['rounding_method'] ) ) {
+
+			$rounding_method = $this->rounding_methods->get(
+				$settings['rounding_method']
+			);
+
+			if ( ! $rounding_method instanceof WordPoints_Dynamic_Points_Rounding_MethodI ) {
+				return $points;
+			}
+
+			$value = $rounding_method->round( $value );
+		}
 
 		if ( false !== wordpoints_int( $value ) ) {
 			$points = $value;

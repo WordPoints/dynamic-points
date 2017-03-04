@@ -30,10 +30,21 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		$this->mock_apps();
 
-		wordpoints_entities()->get_sub_app( 'children' )->register(
+		wordpoints_dynamic_points_rounding_methods_init(
+			wordpoints_module( 'dynamic_points' )->get_sub_app( 'rounding_methods' )
+		);
+
+		$children = wordpoints_entities()->get_sub_app( 'children' );
+		$children->register(
 			'test_entity'
 			, 'int_attr'
 			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Integer'
+		);
+
+		$children->register(
+			'test_entity'
+			, 'decimal_number_attr'
+			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Decimal_Number'
 		);
 
 		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
@@ -68,7 +79,15 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 	 */
 	public function data_provider_valid_settings() {
 		return array(
-			'int_attr' => array( array( 'arg' => array( 'test_entity', 'int_attr' ) ) ),
+			'int_attr' => array(
+				array( 'arg' => array( 'test_entity', 'int_attr' ) ),
+			),
+			'decimal_number_attr' => array(
+				array(
+					'arg' => array( 'test_entity', 'decimal_number_attr' ),
+					'rounding_method' => 'nearest',
+				),
+			),
 		);
 	}
 
@@ -86,7 +105,18 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		$this->mock_apps();
 
-		wordpoints_entities()->get_sub_app( 'children' )->register(
+		wordpoints_dynamic_points_rounding_methods_init(
+			wordpoints_module( 'dynamic_points' )->get_sub_app( 'rounding_methods' )
+		);
+
+		$children = wordpoints_entities()->get_sub_app( 'children' );
+		$children->register(
+			'test_entity'
+			, 'decimal_number_attr'
+			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Decimal_Number'
+		);
+
+		$children->register(
 			'test_entity'
 			, 'text_attr'
 			, 'WordPoints_PHPUnit_Mock_Entity_Attr'
@@ -121,7 +151,18 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		$this->assertSame( array(), $validator->get_field_stack() );
 		$this->assertNull( $event_args->get_current() );
 
-		$this->assertSame( array(), $result );
+		if ( ! is_array( $settings ) || array( 'arg' ) === $invalid ) {
+
+			$this->assertSame( array(), $result );
+
+		} else {
+
+			if ( $invalid ) {
+				unset( $settings[ $invalid[0] ] );
+			}
+
+			$this->assertSame( array( 'dynamic_points' => $settings ), $result );
+		}
 	}
 
 	/**
@@ -140,6 +181,24 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 			'arg_nonexistent' => array( array( 'arg' => array( 'nonexistent' ) ), array( 'arg' ) ),
 			'arg_not_attr' => array( array( 'arg' => array( 'test_entity' ) ), array( 'arg' ) ),
 			'arg_not_int_attr' => array( array( 'arg' => array( 'test_entity', 'text_attr' ) ), array( 'arg' ) ),
+			'rounding_method_required_not_set' => array(
+				array( 'arg' => array( 'test_entity', 'decimal_number_attr' ) ),
+				array(),
+			),
+			'rounding_method_nonexistent' => array(
+				array(
+					'arg' => array( 'test_entity', 'decimal_number_attr' ),
+					'rounding_method' => 'nonexistent',
+				),
+				array( 'rounding_method' ),
+			),
+			'rounding_method_empty' => array(
+				array(
+					'arg' => array( 'test_entity', 'decimal_number_attr' ),
+					'rounding_method' => '',
+				),
+				array( 'rounding_method' ),
+			),
 		);
 	}
 
@@ -173,6 +232,8 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		$this->assertInternalType( 'array', $script_data );
 		$this->assertArrayHasKey( 'arg_label', $script_data );
+		$this->assertArrayHasKey( 'rounding_method_label', $script_data );
+		$this->assertArrayHasKey( 'rounding_methods', $script_data );
 	}
 
 	/**
@@ -292,6 +353,78 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		$entity = new WordPoints_PHPUnit_Mock_Entity( 'test_entity' );
 		$entity->set_the_value( array( 'id' => 1, 'test_attr' => 'not' ) );
+
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
+		$event_args = new WordPoints_Hook_Event_Args( array() );
+		$event_args->add_entity( $entity );
+
+		$fire = new WordPoints_Hook_Fire( $event_args, $reaction, 'test_fire' );
+
+		$this->assertSame( 0, $extension->filter_points_to_award( 0, $fire ) );
+	}
+
+	/**
+	 * Tests calculating the points value when the arg is a decimal number.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_calculate_points_value_decimal_number() {
+
+		$reaction = $this->factory->wordpoints->hook_reaction->create();
+		$reaction->add_meta(
+			'dynamic_points'
+			, array(
+				'arg' => array( 'test_entity', 'decimal_attr' ),
+				'rounding_method' => 'nearest',
+			)
+		);
+
+		wordpoints_dynamic_points_rounding_methods_init(
+			wordpoints_module( 'dynamic_points' )->get_sub_app( 'rounding_methods' )
+		);
+
+		wordpoints_entities()->get_sub_app( 'children' )->register(
+			'test_entity'
+			, 'decimal_attr'
+			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Decimal_Number'
+		);
+
+		$entity = new WordPoints_PHPUnit_Mock_Entity( 'test_entity' );
+		$entity->set_the_value( array( 'id' => 1, 'test_attr' => 3.3 ) );
+
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
+		$event_args = new WordPoints_Hook_Event_Args( array() );
+		$event_args->add_entity( $entity );
+
+		$fire = new WordPoints_Hook_Fire( $event_args, $reaction, 'test_fire' );
+
+		$this->assertSame( 3, $extension->filter_points_to_award( 0, $fire ) );
+	}
+
+	/**
+	 * Tests calculating the points value when the rounding method is invalid.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_calculate_points_value_invalid_rounding_method() {
+
+		$reaction = $this->factory->wordpoints->hook_reaction->create();
+		$reaction->add_meta(
+			'dynamic_points'
+			, array(
+				'arg' => array( 'test_entity', 'decimal_attr' ),
+				'rounding_method' => 'invalid',
+			)
+		);
+
+		wordpoints_entities()->get_sub_app( 'children' )->register(
+			'test_entity'
+			, 'decimal_attr'
+			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Decimal_Number'
+		);
+
+		$entity = new WordPoints_PHPUnit_Mock_Entity( 'test_entity' );
+		$entity->set_the_value( array( 'id' => 1, 'test_attr' => 3.3 ) );
 
 		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
 		$event_args = new WordPoints_Hook_Event_Args( array() );
