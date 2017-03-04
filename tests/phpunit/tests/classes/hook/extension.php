@@ -47,7 +47,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Decimal_Number'
 		);
 
-		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
 		$validator = new WordPoints_Hook_Reaction_Validator( array() );
 		$event_args = new WordPoints_Hook_Event_Args( array() );
 
@@ -122,7 +122,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 			, 'WordPoints_PHPUnit_Mock_Entity_Attr'
 		);
 
-		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
 		$validator = new WordPoints_Hook_Reaction_Validator( array() );
 		$event_args = new WordPoints_Hook_Event_Args( array() );
 
@@ -211,7 +211,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		$reaction = $this->factory->wordpoints->hook_reaction->create();
 
-		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
 		$event_args = new WordPoints_Hook_Event_Args( array() );
 
 		$fire = new WordPoints_Hook_Fire( $event_args, $reaction, 'test_fire' );
@@ -226,7 +226,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 	 */
 	public function test_get_ui_script_data() {
 
-		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
 
 		$script_data = $extension->get_ui_script_data();
 
@@ -245,7 +245,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		$reaction = $this->factory->wordpoints->hook_reaction->create();
 
-		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
 		$event_args = new WordPoints_Hook_Event_Args( array() );
 
 		$fire = new WordPoints_Hook_Fire( $event_args, $reaction, 'test_fire' );
@@ -262,7 +262,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		$reaction = $this->factory->wordpoints->hook_reaction->create();
 
-		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
 		$event_args = new WordPoints_Hook_Event_Args( array() );
 
 		$fire = new WordPoints_Hook_Fire( $event_args, $reaction, 'test_fire' );
@@ -292,7 +292,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		$entity = new WordPoints_PHPUnit_Mock_Entity( 'test_entity' );
 		$entity->set_the_value( array( 'id' => 1, 'test_attr' => 3 ) );
 
-		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
 		$event_args = new WordPoints_Hook_Event_Args( array() );
 		$event_args->add_entity( $entity );
 
@@ -320,7 +320,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Integer'
 		);
 
-		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
 		$event_args = new WordPoints_Hook_Event_Args( array() );
 
 		$event_args->add_entity(
@@ -354,7 +354,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		$entity = new WordPoints_PHPUnit_Mock_Entity( 'test_entity' );
 		$entity->set_the_value( array( 'id' => 1, 'test_attr' => 'not' ) );
 
-		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
 		$event_args = new WordPoints_Hook_Event_Args( array() );
 		$event_args->add_entity( $entity );
 
@@ -392,7 +392,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		$entity = new WordPoints_PHPUnit_Mock_Entity( 'test_entity' );
 		$entity->set_the_value( array( 'id' => 1, 'test_attr' => 3.3 ) );
 
-		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
 		$event_args = new WordPoints_Hook_Event_Args( array() );
 		$event_args->add_entity( $entity );
 
@@ -426,7 +426,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		$entity = new WordPoints_PHPUnit_Mock_Entity( 'test_entity' );
 		$entity->set_the_value( array( 'id' => 1, 'test_attr' => 3.3 ) );
 
-		$extension = new WordPoints_Dynamic_Points_Hook_Extension();
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
 		$event_args = new WordPoints_Hook_Event_Args( array() );
 		$event_args->add_entity( $entity );
 

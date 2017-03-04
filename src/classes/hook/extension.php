@@ -17,11 +17,6 @@ class WordPoints_Dynamic_Points_Hook_Extension
 	implements WordPoints_Hook_UI_Script_Data_ProviderI {
 
 	/**
-	 * @since 1.0.0
-	 */
-	protected $slug = 'dynamic_points';
-
-	/**
 	 * The rounding methods class registry.
 	 *
 	 * @since 1.0.0
@@ -42,7 +37,9 @@ class WordPoints_Dynamic_Points_Hook_Extension
 	/**
 	 * @since 1.0.0
 	 */
-	public function __construct() {
+	public function __construct( $slug ) {
+
+		parent::__construct( $slug );
 
 		$this->rounding_methods = wordpoints_module( 'dynamic_points' )
 			->get_sub_app( 'rounding_methods' );
