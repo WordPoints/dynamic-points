@@ -10,20 +10,12 @@
             }
         },
         ".min": {
-            "21": false,
             "22": false
         },
         ".manifested": {
             "22": false
         },
         "wordpoints-dynamic-points-hooks-admin": {
-            "34": {
-                "name": "$styles->add_data",
-                "type": "unknown",
-                "args_started": true,
-                "arg_count": 0,
-                "parentheses": 1
-            },
             "37": {
                 "name": "$styles->add_data",
                 "type": "unknown",
@@ -53,6 +45,62 @@
         "suffix": {
             "37": {
                 "name": "$styles->add_data",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 1,
+                "parentheses": 1
+            }
+        }
+    },
+    "\/includes\/functions.php": {
+        "nearest": {
+            "53": {
+                "name": "$rounding_methods->register",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 0,
+                "parentheses": 1
+            }
+        },
+        "WordPoints_Dynamic_Points_Rounding_Method_Nearest": {
+            "53": {
+                "name": "$rounding_methods->register",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 1,
+                "parentheses": 1
+            }
+        },
+        "up": {
+            "54": {
+                "name": "$rounding_methods->register",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 0,
+                "parentheses": 1
+            }
+        },
+        "WordPoints_Dynamic_Points_Rounding_Method_Up": {
+            "54": {
+                "name": "$rounding_methods->register",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 1,
+                "parentheses": 1
+            }
+        },
+        "down": {
+            "55": {
+                "name": "$rounding_methods->register",
+                "type": "unknown",
+                "args_started": true,
+                "arg_count": 0,
+                "parentheses": 1
+            }
+        },
+        "WordPoints_Dynamic_Points_Rounding_Method_Down": {
+            "55": {
+                "name": "$rounding_methods->register",
                 "type": "unknown",
                 "args_started": true,
                 "arg_count": 1,

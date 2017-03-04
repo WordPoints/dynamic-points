@@ -11,13 +11,13 @@
             "errors": false
         },
         "\/classes\/hook\/extension.php": {
-            "size": 4374,
-            "hash": "765e1b4eab6cfc663152271c50e5597d",
+            "size": 6914,
+            "hash": "db1c2abc4491bc095481958c70116d7f",
             "errors": false
         },
         "\/classes\/index.php": {
-            "size": 264,
-            "hash": "28de55e30abea24a39bf5a69eedc44d7",
+            "size": 653,
+            "hash": "ff676dbea15033f812a95b5a81c79c61",
             "errors": false
         },
         "\/dynamic-points.php": {
@@ -26,15 +26,40 @@
             "errors": false
         },
         "\/includes\/actions.php": {
-            "size": 241,
-            "hash": "d2aa5f799db60484728ae15df998ad94",
+            "size": 697,
+            "hash": "e7b467456737f32b2fd8ad1262cb4999",
             "errors": false
         },
         "\/includes\/functions.php": {
-            "size": 522,
-            "hash": "76e579dc3e8c4003d5970f41f7c4cfb5",
+            "size": 4043,
+            "hash": "144bd113bca1b9730bf4829f28361b08",
+            "errors": false
+        },
+        "\/classes\/rounding\/method\/down.php": {
+            "size": 532,
+            "hash": "710c72bdb65cdab0aa4aa20c39e45baa",
+            "errors": false
+        },
+        "\/classes\/rounding\/method\/nearest.php": {
+            "size": 549,
+            "hash": "1b5f16e59f5ad1e5dbd50056422c1115",
+            "errors": false
+        },
+        "\/classes\/rounding\/method\/up.php": {
+            "size": 519,
+            "hash": "63bf7e3b4d951c9a2491a081cdd7bf4c",
+            "errors": false
+        },
+        "\/classes\/rounding\/method.php": {
+            "size": 648,
+            "hash": "bc8926bae580cb17079458a5cfe121f2",
+            "errors": false
+        },
+        "\/classes\/rounding\/methodi.php": {
+            "size": 773,
+            "hash": "b880663a0b7c423215df900f65ebaf24",
             "errors": false
         }
     },
-    "config_signature": "21fc62406bcac8a2d58a079c971bae32"
+    "config_signature": "e52f92ebfd78654f521b07d9d049c0b7"
 }
