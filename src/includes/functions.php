@@ -8,6 +8,54 @@
  */
 
 /**
+ * Register module's app when the Modules registry is initialized.
+ *
+ * @since 1.0.0
+ *
+ * @WordPress\action wordpoints_init_app-modules
+ *
+ * @param WordPoints_App $modules The modules app.
+ */
+function wordpoints_dynamic_points_modules_app_init( $modules ) {
+
+	$apps = $modules->sub_apps();
+
+	$apps->register( 'dynamic_points', 'WordPoints_App' );
+}
+
+/**
+ * Register sub apps when the Dynamic Points app is initialized.
+ *
+ * @since 1.0.0
+ *
+ * @WordPress\action wordpoints_init_app-modules-dynamic_points
+ *
+ * @param WordPoints_App $app The Dynamic Points app.
+ */
+function wordpoints_dynamic_points_apps_init( $app ) {
+
+	$apps = $app->sub_apps();
+
+	$apps->register( 'rounding_methods', 'WordPoints_Class_Registry' );
+}
+
+/**
+ * Register rounding methods when the rounding method registry is initialized.
+ *
+ * @since 1.0.0
+ *
+ * @WordPress\action wordpoints_init_app_registry-modules-dynamic_points-rounding_methods
+ *
+ * @param WordPoints_Class_RegistryI $rounding_methods The rounding methods registry.
+ */
+function wordpoints_dynamic_points_rounding_methods_init( $rounding_methods ) {
+
+	$rounding_methods->register( 'nearest', 'WordPoints_Dynamic_Points_Rounding_Method_Nearest' );
+	$rounding_methods->register( 'up', 'WordPoints_Dynamic_Points_Rounding_Method_Up' );
+	$rounding_methods->register( 'down', 'WordPoints_Dynamic_Points_Rounding_Method_Down' );
+}
+
+/**
  * Register hook extension when the extension registry is initialized.
  *
  * @since 1.0.0
