@@ -96,6 +96,17 @@ class WordPoints_Dynamic_Points_Hook_Extension
 			return null;
 		}
 
+		if ( isset( $settings['multiply_by'] ) ) {
+
+			$settings['multiply_by'] = $this->validate_dynamic_points_multiply_by(
+				$settings['multiply_by']
+			);
+
+			if ( ! $settings['multiply_by'] ) {
+				unset( $settings['multiply_by'] );
+			}
+		}
+
 		if ( isset( $settings['rounding_method'] ) ) {
 
 			$this->validator->push_field( 'rounding_method' );
@@ -165,6 +176,38 @@ class WordPoints_Dynamic_Points_Hook_Extension
 		}
 
 		return $arg_hierarchy;
+	}
+
+	/**
+	 * Validate the value to multiply by.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $multiply_by The value to multiply by.
+	 *
+	 * @return string|false The value to multiply by, or false.
+	 */
+	protected function validate_dynamic_points_multiply_by( $multiply_by ) {
+
+		if ( ! is_int( $multiply_by ) ) {
+			$multiply_by = filter_var( $multiply_by, FILTER_VALIDATE_FLOAT );
+		}
+
+		if ( empty( $multiply_by ) ) {
+
+			$this->validator->add_error(
+				__( 'Value to multiply by must be a number other than zero.', 'wordpoints-dynamic-points' )
+				, 'multiply_by'
+			);
+
+			return false;
+		}
+
+		if ( round( $multiply_by ) !== (float) $multiply_by ) {
+			$this->requires_rounding = true;
+		}
+
+		return $multiply_by;
 	}
 
 	/**
@@ -252,6 +295,7 @@ class WordPoints_Dynamic_Points_Hook_Extension
 				'Calculate Points Based On'
 				, 'wordpoints-dynamic-points'
 			),
+			'multiply_by_label' => __( 'Multiply By', 'wordpoints-dynamic-points' ),
 			'rounding_method_label' => __( 'Rounding Method', 'wordpoints-dynamic-points' ),
 			'rounding_methods' => $rounding_methods,
 		);
@@ -308,6 +352,10 @@ class WordPoints_Dynamic_Points_Hook_Extension
 
 		if ( empty( $value ) ) {
 			return $points;
+		}
+
+		if ( isset( $settings['multiply_by'] ) ) {
+			$value = $value * $settings['multiply_by'];
 		}
 
 		if ( isset( $settings['rounding_method'] ) ) {

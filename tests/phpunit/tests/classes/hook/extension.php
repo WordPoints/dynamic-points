@@ -88,6 +88,33 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 					'rounding_method' => 'nearest',
 				),
 			),
+			'int_attr_multiply_by_integer' => array(
+				array(
+					'arg' => array( 'test_entity', 'int_attr' ),
+					'multiply_by' => 5,
+				),
+			),
+			'int_attr_multiply_by_decimal' => array(
+				array(
+					'arg' => array( 'test_entity', 'int_attr' ),
+					'multiply_by' => 5.5,
+					'rounding_method' => 'nearest',
+				),
+			),
+			'decimal_number_attr_multiply_by_integer' => array(
+				array(
+					'arg' => array( 'test_entity', 'decimal_number_attr' ),
+					'multiply_by' => 5,
+					'rounding_method' => 'nearest',
+				),
+			),
+			'decimal_number_attr_multiply_by_decimal' => array(
+				array(
+					'arg' => array( 'test_entity', 'decimal_number_attr' ),
+					'multiply_by' => 5.5,
+					'rounding_method' => 'nearest',
+				),
+			),
 		);
 	}
 
@@ -114,6 +141,12 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 			'test_entity'
 			, 'decimal_number_attr'
 			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Decimal_Number'
+		);
+
+		$children->register(
+			'test_entity'
+			, 'int_attr'
+			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Integer'
 		);
 
 		$children->register(
@@ -181,7 +214,30 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 			'arg_nonexistent' => array( array( 'arg' => array( 'nonexistent' ) ), array( 'arg' ) ),
 			'arg_not_attr' => array( array( 'arg' => array( 'test_entity' ) ), array( 'arg' ) ),
 			'arg_not_int_attr' => array( array( 'arg' => array( 'test_entity', 'text_attr' ) ), array( 'arg' ) ),
-			'rounding_method_required_not_set' => array(
+			'multiply_by_not_numeric' => array(
+				array(
+					'arg' => array( 'test_entity', 'int_attr' ),
+					'multiply_by' => 'invalid',
+					'rounding_method' => 'nearest',
+				),
+				array( 'multiply_by' ),
+			),
+			'multiply_by_zero' => array(
+				array(
+					'arg' => array( 'test_entity', 'int_attr' ),
+					'multiply_by' => 0,
+					'rounding_method' => 'nearest',
+				),
+				array( 'multiply_by' ),
+			),
+			'rounding_method_required_by_multiply_by_not_set' => array(
+				array(
+					'arg' => array( 'test_entity', 'int_attr' ),
+					'multiply_by' => 5.5,
+				),
+				array(),
+			),
+			'rounding_method_required_by_arg_not_set' => array(
 				array( 'arg' => array( 'test_entity', 'decimal_number_attr' ) ),
 				array(),
 			),
@@ -232,6 +288,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 
 		$this->assertInternalType( 'array', $script_data );
 		$this->assertArrayHasKey( 'arg_label', $script_data );
+		$this->assertArrayHasKey( 'multiply_by_label', $script_data );
 		$this->assertArrayHasKey( 'rounding_method_label', $script_data );
 		$this->assertArrayHasKey( 'rounding_methods', $script_data );
 	}
@@ -433,6 +490,80 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		$fire = new WordPoints_Hook_Fire( $event_args, $reaction, 'test_fire' );
 
 		$this->assertSame( 0, $extension->filter_points_to_award( 0, $fire ) );
+	}
+
+	/**
+	 * Tests calculating the points value when it is multiplied by an integer.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_calculate_points_value_multiply_by_integer() {
+
+		$reaction = $this->factory->wordpoints->hook_reaction->create();
+		$reaction->add_meta(
+			'dynamic_points'
+			, array(
+				'arg' => array( 'test_entity', 'int_attr' ),
+				'multiply_by' => 5,
+			)
+		);
+
+		wordpoints_entities()->get_sub_app( 'children' )->register(
+			'test_entity'
+			, 'int_attr'
+			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Integer'
+		);
+
+		$entity = new WordPoints_PHPUnit_Mock_Entity( 'test_entity' );
+		$entity->set_the_value( array( 'id' => 1, 'test_attr' => 3 ) );
+
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
+		$event_args = new WordPoints_Hook_Event_Args( array() );
+		$event_args->add_entity( $entity );
+
+		$fire = new WordPoints_Hook_Fire( $event_args, $reaction, 'test_fire' );
+
+		$this->assertSame( 15, $extension->filter_points_to_award( 0, $fire ) );
+	}
+
+	/**
+	 * Tests calculating the points value when it is multiplied by a decimal number.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_calculate_points_value_multiply_by_decimal_number() {
+
+		$reaction = $this->factory->wordpoints->hook_reaction->create();
+		$reaction->add_meta(
+			'dynamic_points'
+			, array(
+				'arg' => array( 'test_entity', 'int_attr' ),
+				'multiply_by' => 0.5,
+				'rounding_method' => 'nearest',
+			)
+		);
+
+		wordpoints_dynamic_points_rounding_methods_init(
+			wordpoints_module( 'dynamic_points' )->get_sub_app( 'rounding_methods' )
+		);
+
+		wordpoints_entities()->get_sub_app( 'children' )->register(
+			'test_entity'
+			, 'int_attr'
+			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Integer'
+		);
+
+		$entity = new WordPoints_PHPUnit_Mock_Entity( 'test_entity' );
+		$entity->set_the_value( array( 'id' => 1, 'test_attr' => 3 ) );
+
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
+		$event_args = new WordPoints_Hook_Event_Args( array() );
+		$event_args->add_entity( $entity );
+
+		$fire = new WordPoints_Hook_Fire( $event_args, $reaction, 'test_fire' );
+
+		// 1.5 rounds up to 2.
+		$this->assertSame( 2, $extension->filter_points_to_award( 0, $fire ) );
 	}
 
 	/**

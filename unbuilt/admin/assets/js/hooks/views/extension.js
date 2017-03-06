@@ -45,10 +45,25 @@ DynamicPoints = Base.extend({
 	/**
 	 * @since 1.0.0
 	 */
-	events:  {
-		'click .enable':  'enable',
-		'click .disable': 'disable',
-		'change [name="dynamic_points[arg]"]': 'maybeShowRounding'
+	events:  function () {
+
+		var events = {
+			'click .enable':  'enable',
+			'click .disable': 'disable',
+			'change [name="dynamic_points[arg]"]': 'maybeShowRoundingForArg'
+		};
+
+		/*
+		 * Use feature detection to determine whether we should use the `input`
+		 * event. Input is preferred but lacks support in legacy browsers.
+		 */
+		if ( 'oninput' in document.createElement( 'input' ) ) {
+			events['input [name="dynamic_points[multiply_by]"]'] = 'maybeShowRoundingForMultiplyBy';
+		} else {
+			events['keyup [name="dynamic_points[multiply_by]"]'] = 'maybeShowRoundingForMultiplyBy';
+		}
+
+		return events;
 	},
 
 	/**
@@ -126,7 +141,7 @@ DynamicPoints = Base.extend({
 			value = value.join( ',' );
 		}
 
-		var field = Fields.create(
+		var argField = Fields.create(
 			'dynamic_points[arg]'
 			, value
 			, {
@@ -136,11 +151,21 @@ DynamicPoints = Base.extend({
 			}
 		);
 
+		var multiplyByField = Fields.create(
+			'dynamic_points[multiply_by]'
+			, this.reaction.model.get( [ 'dynamic_points', 'multiply_by' ] )
+			, {
+				type: 'number',
+				'default': 1,
+				label: this.model.data.multiply_by_label
+			}
+		);
+
 		this.$el.html( this.template() );
 
 		this.$settings = this.$( '.wordpoints-dynamic-points-settings' );
 
-		this.$settings.html( field );
+		this.$settings.html( argField + multiplyByField );
 
 		if ( value && 0 === this.reaction.model.get( 'points' ) ) {
 			this.$settings.show();
@@ -228,13 +253,44 @@ DynamicPoints = Base.extend({
 	},
 
 	/**
-	 * Shows the rounding field only if it is necessary.
+	 * @summary Checks if the rounding field should be shown.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return {boolean} True if the field should be shown, false otherwise.
+	 */
+	shouldShowRounding: function () {
+
+		return (
+			this.shouldShowRoundingForMultiplyBy()
+			|| this.shouldShowRoundingForArg()
+		);
+	},
+
+	/**
+	 * @summary Displays the rounding field, if it should be shown.
 	 *
 	 * If rounding is not necessary, it ensures that the field is hidden.
 	 *
 	 * @since 1.0.0
 	 */
 	maybeShowRounding: function () {
+
+		if ( this.shouldShowRounding() ) {
+			this.showRounding();
+		} else {
+			this.hideRounding();
+		}
+	},
+
+	/**
+	 * @summary Checks if the rounding should be shown based on the selected arg.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return {boolean} Whether the rounding field should be shown for this arg.
+	 */
+	shouldShowRoundingForArg: function () {
 
 		var $argSelector = this.$( '[name="dynamic_points[arg]"]' );
 
@@ -245,9 +301,51 @@ DynamicPoints = Base.extend({
 
 		var arg = args[ args.length - 1 ];
 
-		if ( arg.get( 'data_type' ) === 'decimal_number' ) {
+		return arg.get( 'data_type' ) === 'decimal_number';
+	},
+
+	/**
+	 * @summary Shows the rounding field only if necessary based on the selected arg.
+	 *
+	 * If rounding is not necessary, it ensures that the field is hidden.
+	 *
+	 * @since 1.0.0
+	 */
+	maybeShowRoundingForArg: function () {
+
+		if ( this.shouldShowRoundingForArg() ) {
 			this.showRounding();
-		} else {
+		} else if ( ! this.shouldShowRoundingForMultiplyBy() ) {
+			this.hideRounding();
+		}
+	},
+
+	/**
+	 * @summary Checks if the rounding should be shown for the value to multiply by.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return {boolean} Whether rounding should be shown for the multiply by value.
+	 */
+	shouldShowRoundingForMultiplyBy: function () {
+
+		var $multiplyBy = this.$( '[name="dynamic_points[multiply_by]"]' );
+
+		return -1 !== $multiplyBy.val().indexOf( '.' );
+	},
+
+	/**
+	 * @summary Shows the rounding only if necessary based on the multiply by value.
+	 *
+	 * If rounding is not necessary, it ensures that the field is hidden.
+	 *
+	 * @since 1.0.0
+	 */
+	maybeShowRoundingForMultiplyBy:  function () {
+
+		if ( this.shouldShowRoundingForMultiplyBy() ) {
+			this.showRounding();
+		} else if ( ! this.shouldShowRoundingForArg() ) {
 			this.hideRounding();
 		}
 	}
