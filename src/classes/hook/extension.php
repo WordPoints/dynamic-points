@@ -109,8 +109,6 @@ class WordPoints_Dynamic_Points_Hook_Extension
 
 		if ( isset( $settings['rounding_method'] ) ) {
 
-			$this->validator->push_field( 'rounding_method' );
-
 			$settings['rounding_method'] = $this->validate_dynamic_points_rounding_method(
 				$settings['rounding_method']
 			);
@@ -118,8 +116,6 @@ class WordPoints_Dynamic_Points_Hook_Extension
 			if ( ! $settings['rounding_method'] ) {
 				unset( $settings['rounding_method'] );
 			}
-
-			$this->validator->pop_field();
 
 		} elseif ( $this->requires_rounding ) {
 
@@ -225,6 +221,7 @@ class WordPoints_Dynamic_Points_Hook_Extension
 
 			$this->validator->add_error(
 				__( 'Invalid rounding method.', 'wordpoints-dynamic-points' )
+				, 'rounding_method'
 			);
 
 			return false;
@@ -234,6 +231,7 @@ class WordPoints_Dynamic_Points_Hook_Extension
 
 			$this->validator->add_error(
 				__( 'Invalid rounding method.', 'wordpoints-dynamic-points' )
+				, 'rounding_method'
 			);
 
 			return false;
