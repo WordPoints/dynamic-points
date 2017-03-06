@@ -76,7 +76,7 @@ DynamicPoints = Base.extend({
 	hierarchies: [],
 
 	/**
-	 * The extension settings element object.
+	 * @summary The extension settings element object.
 	 *
 	 * @since 1.0.0
 	 *
@@ -85,7 +85,7 @@ DynamicPoints = Base.extend({
 	$settings: null,
 
 	/**
-	 * The input element for the regular points.
+	 * @summary The input element for the regular points.
 	 *
 	 * @since 1.0.0
 	 *
@@ -94,7 +94,7 @@ DynamicPoints = Base.extend({
 	$regularPointsInput: null,
 
 	/**
-	 * The wrapper element for the field for the regular points.
+	 * @summary The wrapper element for the field for the regular points.
 	 *
 	 * @since 1.0.0
 	 *
@@ -180,7 +180,7 @@ DynamicPoints = Base.extend({
 	},
 
 	/**
-	 * Shows the extensions's settings.
+	 * @summary Shows the extensions's settings.
 	 *
 	 * @since 1.0.0
 	 */
@@ -197,7 +197,7 @@ DynamicPoints = Base.extend({
 	},
 
 	/**
-	 * Hides the extension's settings.
+	 * @summary Hides the extension's settings.
 	 *
 	 * @since 1.0.0
 	 */
@@ -214,7 +214,7 @@ DynamicPoints = Base.extend({
 	},
 
 	/**
-	 * Displays the rounding field.
+	 * @summary Displays the rounding field.
 	 *
 	 * @since 1.0.0
 	 */
@@ -244,7 +244,7 @@ DynamicPoints = Base.extend({
 	},
 
 	/**
-	 * Hides the rounding field.
+	 * @summary Hides the rounding field.
 	 *
 	 * @since 1.0.0
 	 */
