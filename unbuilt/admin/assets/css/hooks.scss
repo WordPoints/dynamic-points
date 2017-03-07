@@ -6,19 +6,16 @@
 
 .wordpoints-dynamic-points {
 
-	.enable,
-	.disable {
+	.wordpoints-dynamic-points-enable,
+	.wordpoints-dynamic-points-disable {
 		width: 100%;
 		margin-bottom: 10px;
 	}
 
-	.disable {
+	.wordpoints-dynamic-points-disable,
+	.wordpoints-dynamic-points-settings {
 		display: none;
 	}
-}
-
-.wordpoints-dynamic-points-settings {
-	display: none;
 }
 
 // EOF

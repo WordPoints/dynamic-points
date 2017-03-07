@@ -48,8 +48,8 @@ DynamicPoints = Base.extend({
 	events:  function () {
 
 		var events = {
-			'click .enable':  'enable',
-			'click .disable': 'disable',
+			'click .wordpoints-dynamic-points-enable':  'enable',
+			'click .wordpoints-dynamic-points-disable': 'disable',
 			'change [name="dynamic_points[arg]"]': 'maybeShowRoundingForArg'
 		};
 
@@ -202,8 +202,8 @@ DynamicPoints = Base.extend({
 
 		if ( value && 0 === this.reaction.model.get( 'points' ) ) {
 			this.$settings.show();
-			this.$( '.enable' ).hide();
-			this.$( '.disable' ).show();
+			this.$( '.wordpoints-dynamic-points-enable' ).hide();
+			this.$( '.wordpoints-dynamic-points-disable' ).show();
 			this.$regularPoints.hide();
 		}
 
@@ -222,8 +222,8 @@ DynamicPoints = Base.extend({
 		event.preventDefault();
 
 		this.$settings.show();
-		this.$( '.enable' ).hide();
-		this.$( '.disable' ).show().focus();
+		this.$( '.wordpoints-dynamic-points-enable' ).hide();
+		this.$( '.wordpoints-dynamic-points-disable' ).show().focus();
 		this.$regularPoints.hide();
 		this.$regularPointsInput.val( 0 );
 		this.reaction.lockOpen();
@@ -239,8 +239,8 @@ DynamicPoints = Base.extend({
 		event.preventDefault();
 
 		this.$settings.hide();
-		this.$( '.disable' ).hide();
-		this.$( '.enable' ).show();
+		this.$( '.wordpoints-dynamic-points-disable' ).hide();
+		this.$( '.wordpoints-dynamic-points-enable' ).show();
 		this.$regularPoints.show();
 		this.$regularPointsInput.focus();
 		this.reaction.lockOpen();
