@@ -129,6 +129,70 @@ class WordPoints_Dynamic_Points_HGTP_Shortcode_Reaction_Points_Test
 	}
 
 	/**
+	 * Test that it returns a string based on the value multiplied by.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_describes_multiply_by() {
+
+		$points = 0;
+		$reaction = $this->create_points_reaction(
+			array(
+				'event' => 'post_publish\\post',
+				'target' => array( 'post\\post', 'author', 'user' ),
+				'dynamic_points' => array(
+					'arg' => array( 'post\\post', 'comment_count' ),
+					'multiply_by' => 4,
+				),
+			)
+		);
+
+		$this->assertIsReaction( $reaction );
+
+		$result = wordpoints_dynamic_points_htgp_shortcode_reaction_points(
+			$points
+			, $reaction
+		);
+
+		$this->assertSame(
+			'Calculated from Post » Comment Count multiplied by 4.'
+			, $result
+		);
+	}
+
+	/**
+	 * Test that it doesn't include the value multiplied by if it is 1.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_describes_multiply_by_one() {
+
+		$points = 0;
+		$reaction = $this->create_points_reaction(
+			array(
+				'event' => 'post_publish\\post',
+				'target' => array( 'post\\post', 'author', 'user' ),
+				'dynamic_points' => array(
+					'arg' => array( 'post\\post', 'comment_count' ),
+					'multiply_by' => 1,
+				),
+			)
+		);
+
+		$this->assertIsReaction( $reaction );
+
+		$result = wordpoints_dynamic_points_htgp_shortcode_reaction_points(
+			$points
+			, $reaction
+		);
+
+		$this->assertSame(
+			'Calculated from Post » Comment Count.'
+			, $result
+		);
+	}
+
+	/**
 	 * Test that it returns a string based on the arg hierarchy and minimum points.
 	 *
 	 * @since 1.0.0
@@ -156,6 +220,39 @@ class WordPoints_Dynamic_Points_HGTP_Shortcode_Reaction_Points_Test
 
 		$this->assertSame(
 			'Calculated from Post » Comment Count. Minimum: 5.'
+			, $result
+		);
+	}
+
+	/**
+	 * Test that it returns a string based on the value multiplied by.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_describes_multiply_by_and_minimum() {
+
+		$points = 0;
+		$reaction = $this->create_points_reaction(
+			array(
+				'event' => 'post_publish\\post',
+				'target' => array( 'post\\post', 'author', 'user' ),
+				'dynamic_points' => array(
+					'arg' => array( 'post\\post', 'comment_count' ),
+					'multiply_by' => 4,
+					'min' => 5,
+				),
+			)
+		);
+
+		$this->assertIsReaction( $reaction );
+
+		$result = wordpoints_dynamic_points_htgp_shortcode_reaction_points(
+			$points
+			, $reaction
+		);
+
+		$this->assertSame(
+			'Calculated from Post » Comment Count multiplied by 4. Minimum: 5.'
 			, $result
 		);
 	}
