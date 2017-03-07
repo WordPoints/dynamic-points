@@ -51,6 +51,7 @@ function wordpoints_dynamic_points_register_admin_scripts() {
 		, 'wordpoints-templates'
 		, '
 			<script type="text/template" id="tmpl-wordpoints-dynamic-points-hook-settings">
+				<hr class="wordpoints-dynamic-points-button-line" />
 				<button class="button-secondary wordpoints-dynamic-points-enable">' . esc_html__( 'Or, Enable Dynamic Points', 'wordpoints-dynamic-points' ) . '</button>
 				<button class="button-secondary wordpoints-dynamic-points-disable">' . esc_html__( 'Disable Dynamic Points', 'wordpoints-dynamic-points' ) . '</button>
 				<div class="wordpoints-dynamic-points-settings"></div>

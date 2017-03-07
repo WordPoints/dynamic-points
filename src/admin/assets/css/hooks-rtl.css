@@ -3,18 +3,22 @@
  *
  * @since 1.0.0
  */
-.wordpoints-dynamic-points .wordpoints-dynamic-points-button-line {
+.wordpoints-dynamic-points .wordpoints-dynamic-points-button-filler {
   width: 100%;
-  margin-bottom: -17px;
-  margin-top: 34px;
+  height: 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: -16px;
+  margin-top: 26px;
 }
 
 .wordpoints-dynamic-points .wordpoints-dynamic-points-enable,
 .wordpoints-dynamic-points .wordpoints-dynamic-points-disable {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
 }
 
-.wordpoints-dynamic-points .wordpoints-dynamic-points-disable,
 .wordpoints-dynamic-points .wordpoints-dynamic-points-settings {
   display: none;
 }
