@@ -127,6 +127,29 @@ class WordPoints_Dynamic_Points_Hook_Extension
 			);
 		}
 
+		if ( isset( $settings['min'] ) ) {
+
+			$settings['min'] = $this->validate_dynamic_points_min(
+				$settings['min']
+			);
+
+			if ( ! $settings['min'] ) {
+				unset( $settings['min'] );
+			}
+		}
+
+		if ( isset( $settings['max'] ) ) {
+
+			$settings['max'] = $this->validate_dynamic_points_max(
+				$settings['max']
+				, isset( $settings['min'] ) ? $settings['min'] : null
+			);
+
+			if ( ! $settings['max'] ) {
+				unset( $settings['max'] );
+			}
+		}
+
 		return $settings;
 	}
 
@@ -241,6 +264,68 @@ class WordPoints_Dynamic_Points_Hook_Extension
 	}
 
 	/**
+	 * Validate the minimum number of points to award.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $min The minimum.
+	 *
+	 * @return int|false The minimum, or false.
+	 */
+	protected function validate_dynamic_points_min( $min ) {
+
+		if ( false === wordpoints_int( $min ) ) {
+
+			$this->validator->add_error(
+				__( 'Minimum must be an integer.', 'wordpoints-dynamic-points' )
+				, 'min'
+			);
+
+			return false;
+		}
+
+		return $min;
+	}
+
+	/**
+	 * Validate the maximum number of points to award.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $max The maximum.
+	 * @param int $min The minimum, if set.
+	 *
+	 * @return int|false The maximum, or false.
+	 */
+	protected function validate_dynamic_points_max( $max, $min = null ) {
+
+		if ( false === wordpoints_int( $max ) ) {
+
+			$this->validator->add_error(
+				__( 'Maximum must be an integer.', 'wordpoints-dynamic-points' )
+				, 'max'
+			);
+
+			return false;
+		}
+
+		if ( isset( $min ) && $min >= $max ) {
+
+			$this->validator->add_error(
+				__(
+					'The maximum must be more than the minimum.'
+					, 'wordpoints-dynamic-points'
+				)
+				, 'max'
+			);
+
+			return false;
+		}
+
+		return $max;
+	}
+
+	/**
 	 * Check that we can get a number from an arg to use as the dynamic points value.
 	 *
 	 * @since 1.0.0
@@ -296,6 +381,8 @@ class WordPoints_Dynamic_Points_Hook_Extension
 			'multiply_by_label' => __( 'Multiply By', 'wordpoints-dynamic-points' ),
 			'rounding_method_label' => __( 'Rounding Method', 'wordpoints-dynamic-points' ),
 			'rounding_methods' => $rounding_methods,
+			'min_label' => __( 'Minimum To Award', 'wordpoints-dynamic-points' ),
+			'max_label' => __( 'Maximum To Award', 'wordpoints-dynamic-points' ),
 		);
 	}
 
@@ -349,7 +436,7 @@ class WordPoints_Dynamic_Points_Hook_Extension
 		$value = $arg->get_the_value();
 
 		if ( empty( $value ) ) {
-			return $points;
+			$value = $points;
 		}
 
 		if ( isset( $settings['multiply_by'] ) ) {
@@ -371,6 +458,14 @@ class WordPoints_Dynamic_Points_Hook_Extension
 
 		if ( false !== wordpoints_int( $value ) ) {
 			$points = $value;
+		}
+
+		if ( isset( $settings['min'] ) && $points < $settings['min'] ) {
+			$points = $settings['min'];
+		}
+
+		if ( isset( $settings['max'] ) && $points > $settings['max'] ) {
+			$points = $settings['max'];
 		}
 
 		return $points;

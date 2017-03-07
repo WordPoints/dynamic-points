@@ -115,6 +115,19 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 					'rounding_method' => 'nearest',
 				),
 			),
+			'minimum' => array(
+				array( 'arg' => array( 'test_entity', 'int_attr' ), 'min' => 5 ),
+			),
+			'maximum' => array(
+				array( 'arg' => array( 'test_entity', 'int_attr' ), 'max' => 5 ),
+			),
+			'minimum_and_maximum' => array(
+				array(
+					'arg' => array( 'test_entity', 'int_attr' ),
+					'min' => 1,
+					'max' => 5,
+				),
+			),
 		);
 	}
 
@@ -255,6 +268,36 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 				),
 				array( 'rounding_method' ),
 			),
+			'minimum' => array(
+				array(
+					'arg' => array( 'test_entity', 'int_attr' ),
+					'min' => 'invalid',
+				),
+				array( 'min' ),
+			),
+			'maximum' => array(
+				array(
+					'arg' => array( 'test_entity', 'int_attr' ),
+					'max' => 'invalid',
+				),
+				array( 'max' ),
+			),
+			'minimum_more_than_maximum' => array(
+				array(
+					'arg' => array( 'test_entity', 'int_attr' ),
+					'min' => 6,
+					'max' => 5,
+				),
+				array( 'max' ),
+			),
+			'minimum_equals_maximum' => array(
+				array(
+					'arg' => array( 'test_entity', 'int_attr' ),
+					'min' => 5,
+					'max' => 5,
+				),
+				array( 'max' ),
+			),
 		);
 	}
 
@@ -291,6 +334,8 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		$this->assertArrayHasKey( 'multiply_by_label', $script_data );
 		$this->assertArrayHasKey( 'rounding_method_label', $script_data );
 		$this->assertArrayHasKey( 'rounding_methods', $script_data );
+		$this->assertArrayHasKey( 'min_label', $script_data );
+		$this->assertArrayHasKey( 'max_label', $script_data );
 	}
 
 	/**
@@ -563,6 +608,99 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		$fire = new WordPoints_Hook_Fire( $event_args, $reaction, 'test_fire' );
 
 		// 1.5 rounds up to 2.
+		$this->assertSame( 2, $extension->filter_points_to_award( 0, $fire ) );
+	}
+
+	/**
+	 * Tests calculating the points value when there is a minimum.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_calculate_points_value_with_minimum() {
+
+		$reaction = $this->factory->wordpoints->hook_reaction->create();
+		$reaction->add_meta(
+			'dynamic_points'
+			, array( 'arg' => array( 'test_entity', 'int_attr' ), 'min' => 5 )
+		);
+
+		wordpoints_entities()->get_sub_app( 'children' )->register(
+			'test_entity'
+			, 'int_attr'
+			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Integer'
+		);
+
+		$entity = new WordPoints_PHPUnit_Mock_Entity( 'test_entity' );
+		$entity->set_the_value( array( 'id' => 1, 'test_attr' => 3 ) );
+
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
+		$event_args = new WordPoints_Hook_Event_Args( array() );
+		$event_args->add_entity( $entity );
+
+		$fire = new WordPoints_Hook_Fire( $event_args, $reaction, 'test_fire' );
+
+		$this->assertSame( 5, $extension->filter_points_to_award( 0, $fire ) );
+	}
+
+	/**
+	 * Tests calculating the points value when the arg's value isn't set.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_calculate_points_value_arg_value_not_set_minimum() {
+
+		$reaction = $this->factory->wordpoints->hook_reaction->create();
+		$reaction->add_meta(
+			'dynamic_points'
+			, array( 'arg' => array( 'test_entity', 'int_attr' ), 'min' => 5 )
+		);
+
+		wordpoints_entities()->get_sub_app( 'children' )->register(
+			'test_entity'
+			, 'int_attr'
+			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Integer'
+		);
+
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
+		$event_args = new WordPoints_Hook_Event_Args( array() );
+
+		$event_args->add_entity(
+			new WordPoints_PHPUnit_Mock_Entity( 'test_entity' )
+		);
+
+		$fire = new WordPoints_Hook_Fire( $event_args, $reaction, 'test_fire' );
+
+		$this->assertSame( 5, $extension->filter_points_to_award( 0, $fire ) );
+	}
+
+	/**
+	 * Tests calculating the points value when there is a maximum.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_calculate_points_value_with_maxmimum() {
+
+		$reaction = $this->factory->wordpoints->hook_reaction->create();
+		$reaction->add_meta(
+			'dynamic_points'
+			, array( 'arg' => array( 'test_entity', 'int_attr' ), 'max' => 2 )
+		);
+
+		wordpoints_entities()->get_sub_app( 'children' )->register(
+			'test_entity'
+			, 'int_attr'
+			, 'WordPoints_PHPUnit_Mock_Entity_Attr_Integer'
+		);
+
+		$entity = new WordPoints_PHPUnit_Mock_Entity( 'test_entity' );
+		$entity->set_the_value( array( 'id' => 1, 'test_attr' => 3 ) );
+
+		$extension = new WordPoints_Dynamic_Points_Hook_Extension( 'dynamic_points' );
+		$event_args = new WordPoints_Hook_Event_Args( array() );
+		$event_args->add_entity( $entity );
+
+		$fire = new WordPoints_Hook_Fire( $event_args, $reaction, 'test_fire' );
+
 		$this->assertSame( 2, $extension->filter_points_to_award( 0, $fire ) );
 	}
 

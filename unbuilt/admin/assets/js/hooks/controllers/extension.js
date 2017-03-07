@@ -116,14 +116,50 @@ var DynamicPoints = Extension.extend({
 
 				delete attributes.dynamic_points;
 
-			} else if (
-				attributes.dynamic_points.arg
-				&& 'string' === typeof attributes.dynamic_points.arg
-			) {
+			} else {
 
-				attributes.dynamic_points.arg = attributes.dynamic_points.arg.split(
-					','
-				);
+				// Make sure the arg hierarchy is an array.
+				if (
+					attributes.dynamic_points.arg
+					&& 'string' === typeof attributes.dynamic_points.arg
+				) {
+
+					attributes.dynamic_points.arg = attributes.dynamic_points.arg.split(
+						','
+					);
+				}
+
+				// Delete the rounding method if it isn't needed.
+				if ( attributes.dynamic_points.rounding_method ) {
+
+					var multiplyBy = attributes.dynamic_points.multiply_by;
+
+					var arg = Args
+						.getArgsFromHierarchy( attributes.dynamic_points.arg )
+						.pop();
+
+					if (
+						Math.round( multiplyBy ).toString() === multiplyBy
+						&& arg.get( 'data_type' ) !== 'decimal_number'
+					) {
+						delete attributes.dynamic_points.rounding_method;
+					}
+				}
+
+				// Delete min and max if they aren't set.
+				if (
+					'undefined' !== typeof attributes.dynamic_points.min
+					&& '' === attributes.dynamic_points.min
+				) {
+					delete attributes.dynamic_points.min;
+				}
+
+				if (
+					'undefined' !== typeof attributes.dynamic_points.max
+					&& '' === attributes.dynamic_points.max
+				) {
+					delete attributes.dynamic_points.max;
+				}
 			}
 		}
 	}

@@ -113,8 +113,6 @@ DynamicPoints = Base.extend({
 		this.$regularPoints = this.$regularPointsInput.closest( 'p.description' );
 
 		this.on( 'render', this.maybeShowRounding );
-
-		this.listenTo( this.model, 'invalid', this.showValidationErrors );
 	},
 
 	/**
@@ -161,11 +159,46 @@ DynamicPoints = Base.extend({
 			}
 		);
 
+		var roundingMethodField = Fields.create(
+			'dynamic_points[rounding_method]'
+			, this.model.get( ['dynamic_points', 'rounding_method'] )
+			, {
+				type: 'select',
+				options: this.model.data.rounding_methods,
+				label: this.model.data.rounding_method_label
+			}
+		);
+
+		roundingMethodField = $(
+			'<div class="wordpoints-dynamic-points-rounding-method"></div>'
+		)
+			.html( roundingMethodField )[0].outerHTML;
+
+		var minField = Fields.create(
+			'dynamic_points[min]'
+			, this.reaction.model.get( [ 'dynamic_points', 'min' ] )
+			, {
+				type: 'number',
+				label: this.model.data.min_label
+			}
+		);
+
+		var maxField = Fields.create(
+			'dynamic_points[max]'
+			, this.reaction.model.get( [ 'dynamic_points', 'max' ] )
+			, {
+				type: 'number',
+				label: this.model.data.max_label
+			}
+		);
+
 		this.$el.html( this.template() );
 
 		this.$settings = this.$( '.wordpoints-dynamic-points-settings' );
 
-		this.$settings.html( argField + multiplyByField );
+		this.$settings.html(
+			argField + multiplyByField + roundingMethodField + minField + maxField
+		);
 
 		if ( value && 0 === this.reaction.model.get( 'points' ) ) {
 			this.$settings.show();
@@ -219,28 +252,7 @@ DynamicPoints = Base.extend({
 	 * @since 1.0.0
 	 */
 	showRounding: function () {
-
-		var $field = this.$( '.wordpoints-dynamic-points-rounding-method' );
-
-		if ( ! $field.length ) {
-
-			var field = Fields.create(
-				'dynamic_points[rounding_method]'
-				, this.model.get( ['dynamic_points', 'rounding_method'] )
-				, {
-					type: 'select',
-					options: this.model.data.rounding_methods,
-					label: this.model.data.rounding_method_label
-				}
-			);
-
-			$field = $( '<div class="wordpoints-dynamic-points-rounding-method"></div>' )
-				.html( field );
-
-			this.$settings.append( $field );
-		}
-
-		$field.show();
+		this.$( '.wordpoints-dynamic-points-rounding-method' ).show();
 	},
 
 	/**
