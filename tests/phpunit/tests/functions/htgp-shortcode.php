@@ -42,7 +42,7 @@ class WordPoints_Dynamic_Points_HGTP_Shortcode_Reaction_Points_Test
 			, $reaction
 		);
 
-		$this->assertSame( 'Calculated from Post » Comment Count', $result );
+		$this->assertSame( 'Calculated from Post » Comment Count.', $result );
 	}
 
 	/**
@@ -126,6 +126,103 @@ class WordPoints_Dynamic_Points_HGTP_Shortcode_Reaction_Points_Test
 		);
 
 		$this->assertSame( 'Dynamic', $result );
+	}
+
+	/**
+	 * Test that it returns a string based on the arg hierarchy and minimum points.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_describes_minimum() {
+
+		$points = 0;
+		$reaction = $this->create_points_reaction(
+			array(
+				'event' => 'post_publish\\post',
+				'target' => array( 'post\\post', 'author', 'user' ),
+				'dynamic_points' => array(
+					'arg' => array( 'post\\post', 'comment_count' ),
+					'min' => 5,
+				),
+			)
+		);
+
+		$this->assertIsReaction( $reaction );
+
+		$result = wordpoints_dynamic_points_htgp_shortcode_reaction_points(
+			$points
+			, $reaction
+		);
+
+		$this->assertSame(
+			'Calculated from Post » Comment Count. Minimum: 5.'
+			, $result
+		);
+	}
+
+	/**
+	 * Test that it returns a string based on the arg hierarchy and maximum points.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_describes_maximum() {
+
+		$points = 0;
+		$reaction = $this->create_points_reaction(
+			array(
+				'event' => 'post_publish\\post',
+				'target' => array( 'post\\post', 'author', 'user' ),
+				'dynamic_points' => array(
+					'arg' => array( 'post\\post', 'comment_count' ),
+					'max' => 5,
+				),
+			)
+		);
+
+		$this->assertIsReaction( $reaction );
+
+		$result = wordpoints_dynamic_points_htgp_shortcode_reaction_points(
+			$points
+			, $reaction
+		);
+
+		$this->assertSame(
+			'Calculated from Post » Comment Count. Maximum: 5.'
+			, $result
+		);
+	}
+
+	/**
+	 * Test that it returns a string with both the minimum and maximum points.
+	 *
+	 * @since 1.0.0
+	 */
+	public function test_describes_minimum_and_maximum() {
+
+		$points = 0;
+		$reaction = $this->create_points_reaction(
+			array(
+				'event' => 'post_publish\\post',
+				'target' => array( 'post\\post', 'author', 'user' ),
+				'dynamic_points' => array(
+					'arg' => array( 'post\\post', 'comment_count' ),
+					'min' => 5,
+					'max' => 50,
+				),
+			)
+		);
+
+		$this->assertIsReaction( $reaction );
+
+		$result = wordpoints_dynamic_points_htgp_shortcode_reaction_points(
+			$points
+			, $reaction
+		);
+
+		$this->assertSame(
+			'Calculated from Post » Comment Count. Minimum: 5. Maximum: 50.'
+			, $result
+		);
 	}
 }
 

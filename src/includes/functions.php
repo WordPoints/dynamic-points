@@ -105,11 +105,31 @@ function wordpoints_dynamic_points_htgp_shortcode_reaction_points(
 		return __( 'Dynamic', 'wordpoints-dynamic-points' );
 	}
 
-	return sprintf(
+	$text = sprintf(
 		// translators: Value the points are based on, e.g., "Post » Comment Count".
-		__( 'Calculated from %s', 'wordpoints-dynamic-points' )
+		__( 'Calculated from %s.', 'wordpoints-dynamic-points' )
 		, implode( __( ' » ', 'wordpoints-dynamic-points' ), $arg_titles )
 	);
+
+	if ( isset( $settings['min'] ) ) {
+		$text .= ' ';
+		$text .= sprintf(
+			// translators: Minimum number of points awarded.
+			__( 'Minimum: %s.', 'wordpoints-dynamic-points' )
+			, $settings['min']
+		);
+	}
+
+	if ( isset( $settings['max'] ) ) {
+		$text .= ' ';
+		$text .= sprintf(
+			// translators: Maximum number of points awarded.
+			__( 'Maximum: %s.', 'wordpoints-dynamic-points' )
+			, $settings['max']
+		);
+	}
+
+	return $text;
 }
 
 /**
