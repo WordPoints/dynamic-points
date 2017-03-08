@@ -1,0 +1,119 @@
+# Copyright (C) 2017 J.D. Grimes
+# This file is distributed under the same license as the WordPoints Dynamic Points package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPoints Dynamic Points 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-08 20:40:04+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: admin/includes/functions.php:55
+msgid "Or, Enable Dynamic Points"
+msgstr ""
+
+#: admin/includes/functions.php:56
+msgid "Disable Dynamic Points"
+msgstr ""
+
+#: classes/hook/extension.php:63 classes/hook/extension.php:170
+msgid "Dynamic points settings do not match expected format."
+msgstr ""
+
+#: classes/hook/extension.php:75
+msgid "You must specify an arg to calculate the points based on."
+msgstr ""
+
+#: classes/hook/extension.php:123
+msgid ""
+"A rounding method must be set when awarding dynamic points based on a "
+"decimal number value."
+msgstr ""
+
+#: classes/hook/extension.php:188
+msgid "Dynamic points cannot be awarded based on the specified attribute."
+msgstr ""
+
+#: classes/hook/extension.php:218
+msgid "Value to multiply by must be a number other than zero."
+msgstr ""
+
+#: classes/hook/extension.php:246 classes/hook/extension.php:256
+msgid "Invalid rounding method."
+msgstr ""
+
+#: classes/hook/extension.php:280
+msgid "Minimum must be an integer."
+msgstr ""
+
+#: classes/hook/extension.php:305
+msgid "Maximum must be an integer."
+msgstr ""
+
+#: classes/hook/extension.php:315
+msgid "The maximum must be more than the minimum."
+msgstr ""
+
+#: classes/hook/extension.php:377
+msgid "Calculate Points Based On"
+msgstr ""
+
+#: classes/hook/extension.php:381
+msgid "Multiply By"
+msgstr ""
+
+#: classes/hook/extension.php:382
+msgid "Rounding Method"
+msgstr ""
+
+#: classes/hook/extension.php:384
+msgid "Minimum To Award"
+msgstr ""
+
+#: classes/hook/extension.php:385
+msgid "Maximum To Award"
+msgstr ""
+
+#: classes/rounding/method/down.php:22
+msgid "Always Down"
+msgstr ""
+
+#: classes/rounding/method/nearest.php:22
+msgid "To Nearest Integer"
+msgstr ""
+
+#: classes/rounding/method/up.php:22
+msgid "Always Up"
+msgstr ""
+
+#: includes/functions.php:105
+msgid "Dynamic"
+msgstr ""
+
+#: includes/functions.php:108
+msgid " » "
+msgstr ""
+
+#. translators: 1. Value the points are based on; 2. Number.
+#: includes/functions.php:114
+msgid "Calculated from %1$s multiplied by %2$s."
+msgstr ""
+
+#. translators: Value the points are based on, e.g., "Post » Comment Count".
+#: includes/functions.php:123
+msgid "Calculated from %s."
+msgstr ""
+
+#. translators: Minimum number of points awarded.
+#: includes/functions.php:132
+msgid "Minimum: %s."
+msgstr ""
+
+#. translators: Maximum number of points awarded.
+#: includes/functions.php:141
+msgid "Maximum: %s."
+msgstr ""
