@@ -6,13 +6,13 @@
             "errors": false
         },
         "\/admin\/includes\/functions.php": {
-            "size": 1880,
-            "hash": "4e22fd8e1859297764a3fabdd7f83752",
+            "size": 1989,
+            "hash": "1f92a505fca2e17971596de6ab0bbba9",
             "errors": false
         },
         "\/classes\/hook\/extension.php": {
-            "size": 6914,
-            "hash": "db1c2abc4491bc095481958c70116d7f",
+            "size": 9947,
+            "hash": "5d0015691dc3b6b1cf7d8f23cf287ad7",
             "errors": false
         },
         "\/classes\/index.php": {
@@ -31,8 +31,8 @@
             "errors": false
         },
         "\/includes\/functions.php": {
-            "size": 4043,
-            "hash": "144bd113bca1b9730bf4829f28361b08",
+            "size": 4802,
+            "hash": "1f5ef12c012a36e02c1d655640c89434",
             "errors": false
         },
         "\/classes\/rounding\/method\/down.php": {
@@ -58,6 +58,11 @@
         "\/classes\/rounding\/methodi.php": {
             "size": 773,
             "hash": "b880663a0b7c423215df900f65ebaf24",
+            "errors": false
+        },
+        "\/includes\/class-un-installer.php": {
+            "size": 1404,
+            "hash": "5b509ba6d3a9115f82c654ab1b8f3525",
             "errors": false
         }
     },
