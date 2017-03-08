@@ -164,8 +164,12 @@ class WordPoints_Dynamic_Points_HGTP_Shortcode_Reaction_Points_Test
 	 * Test that it doesn't include the value multiplied by if it is 1.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @dataProvider data_provider_multiply_by_one
+	 *
+	 * @param mixed $one One.
 	 */
-	public function test_describes_multiply_by_one() {
+	public function test_describes_multiply_by_one( $one ) {
 
 		$points = 0;
 		$reaction = $this->create_points_reaction(
@@ -174,7 +178,7 @@ class WordPoints_Dynamic_Points_HGTP_Shortcode_Reaction_Points_Test
 				'target' => array( 'post\\post', 'author', 'user' ),
 				'dynamic_points' => array(
 					'arg' => array( 'post\\post', 'comment_count' ),
-					'multiply_by' => 1,
+					'multiply_by' => $one,
 				),
 			)
 		);
@@ -189,6 +193,21 @@ class WordPoints_Dynamic_Points_HGTP_Shortcode_Reaction_Points_Test
 		$this->assertSame(
 			'Calculated from Post » Comment Count.'
 			, $result
+		);
+	}
+
+	/**
+	 * Provides values of one for the multiply by setting.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array Values of one.
+	 */
+	public function data_provider_multiply_by_one() {
+		return array(
+			'int' => array( 1 ),
+			'float' => array( 1.0 ),
+			'string' => array( '1' ),
 		);
 	}
 

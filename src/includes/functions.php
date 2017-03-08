@@ -107,7 +107,7 @@ function wordpoints_dynamic_points_htgp_shortcode_reaction_points(
 
 	$arg = implode( __( ' » ', 'wordpoints-dynamic-points' ), $arg_titles );
 
-	if ( isset( $settings['multiply_by'] ) && 1 !== $settings['multiply_by'] ) {
+	if ( isset( $settings['multiply_by'] ) && 1.0 !== (float) $settings['multiply_by'] ) {
 
 		$text = sprintf(
 			// translators: 1. Value the points are based on; 2. Number.
