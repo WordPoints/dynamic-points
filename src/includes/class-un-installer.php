@@ -4,13 +4,17 @@
  * Un/installer class.
  *
  * @package WordPoints_Dynamic_Points
- * @since   1.0.0
+ * @since 1.0.0
+ * @deprecated 1.0.1
  */
+
+_deprecated_file( __FILE__, '1.0.1' );
 
 /**
  * Un/installs the module.
  *
  * @since 1.0.0
+ * @deprecated 1.0.1
  */
 class WordPoints_Dynamic_Points_Un_Installer extends WordPoints_Un_Installer_Base {
 
@@ -56,26 +60,8 @@ class WordPoints_Dynamic_Points_Un_Installer extends WordPoints_Un_Installer_Bas
 	 */
 	protected function uninstall_dynamic_points_reactions() {
 
-		$reaction_store = wordpoints_hooks()->get_reaction_store( 'points' );
-
-		if ( ! $reaction_store ) {
-			return;
-		}
-
-		foreach ( $reaction_store->get_reactions() as $reaction ) {
-
-			$settings = $reaction->get_meta( 'dynamic_points' );
-
-			if ( ! $settings ) {
-				continue;
-			}
-
-			if ( 0 === $reaction->get_meta( 'points' ) ) {
-				$reaction->update_meta( 'disable', true );
-			}
-
-			$reaction->delete_meta( 'dynamic_points' );
-		}
+		$routine = new WordPoints_Dynamic_Points_Uninstaller_Reactions();
+		$routine->run();
 	}
 }
 

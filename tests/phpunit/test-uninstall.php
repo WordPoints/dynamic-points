@@ -12,7 +12,8 @@
  *
  * @since 1.0.0
  *
- * @covers WordPoints_Dynamic_Points_Un_Installer
+ * @covers WordPoints_Dynamic_Points_Installable
+ * @covers WordPoints_Dynamic_Points_Uninstaller_Reactions
  */
 class WordPoints_Dynamic_Points_Uninstall_Test
 	extends WordPoints_PHPUnit_TestCase_Extension_Uninstall {
