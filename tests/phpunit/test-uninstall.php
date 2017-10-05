@@ -11,9 +11,11 @@
  * Tests uninstalling the module.
  *
  * @since 1.0.0
+ *
+ * @covers WordPoints_Dynamic_Points_Un_Installer
  */
 class WordPoints_Dynamic_Points_Uninstall_Test
-	extends WordPoints_PHPUnit_TestCase_Module_Uninstall {
+	extends WordPoints_PHPUnit_TestCase_Extension_Uninstall {
 
 	/**
 	 * Test installation and uninstallation.
