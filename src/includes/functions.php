@@ -1,24 +1,25 @@
 <?php
 
 /**
- * Module functions.
+ * Extension functions.
  *
  * @package WordPoints_Dynamic_Points
  * @since   1.0.0
  */
 
 /**
- * Register module's app when the Modules registry is initialized.
+ * Register extension's app when the Extensions registry is initialized.
  *
  * @since 1.0.0
  *
- * @WordPress\action wordpoints_init_app-modules
+ * @WordPress\action wordpoints_init_app-extensions
+ * @WordPress\action wordpoints_init_app-modules For back-compat.
  *
- * @param WordPoints_App $modules The modules app.
+ * @param WordPoints_App $extensions The extensions app.
  */
-function wordpoints_dynamic_points_modules_app_init( $modules ) {
+function wordpoints_dynamic_points_modules_app_init( $extensions ) {
 
-	$apps = $modules->sub_apps();
+	$apps = $extensions->sub_apps();
 
 	$apps->register( 'dynamic_points', 'WordPoints_App' );
 }
@@ -28,7 +29,8 @@ function wordpoints_dynamic_points_modules_app_init( $modules ) {
  *
  * @since 1.0.0
  *
- * @WordPress\action wordpoints_init_app-modules-dynamic_points
+ * @WordPress\action wordpoints_init_app-extensions-dynamic_points
+ * @WordPress\action wordpoints_init_app-modules-dynamic_points For back-compat.
  *
  * @param WordPoints_App $app The Dynamic Points app.
  */
@@ -44,7 +46,9 @@ function wordpoints_dynamic_points_apps_init( $app ) {
  *
  * @since 1.0.0
  *
+ * @WordPress\action wordpoints_init_app_registry-extensions-dynamic_points-rounding_methods
  * @WordPress\action wordpoints_init_app_registry-modules-dynamic_points-rounding_methods
+ *                   For back-compat.
  *
  * @param WordPoints_Class_RegistryI $rounding_methods The rounding methods registry.
  */

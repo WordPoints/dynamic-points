@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Main file of the module.
+ * Main file of the extension.
  *
  * ---------------------------------------------------------------------------------|
  * Copyright 2017  J.D. Grimes  (email : jdg@codesymphony.co)
@@ -47,14 +47,14 @@ wordpoints_register_extension(
 WordPoints_Class_Autoloader::register_dir( dirname( __FILE__ ) . '/classes/' );
 
 /**
- * The module's functions.
+ * The extension's functions.
  *
  * @since 1.0.0
  */
 require_once dirname( __FILE__ ) . '/includes/functions.php';
 
 /**
- * Hook up the module's actions and filters.
+ * Hook up the extension's actions and filters.
  *
  * @since 1.0.0
  */
@@ -63,14 +63,14 @@ require_once dirname( __FILE__ ) . '/includes/actions.php';
 if ( is_admin() ) {
 
 	/**
-	 * The module's admin-side functions.
+	 * The extension's admin-side functions.
 	 *
 	 * @since 1.0.0
 	 */
 	require_once dirname( __FILE__ ) . '/admin/includes/functions.php';
 
 	/**
-	 * Hook up the module's admin-side actions and filters.
+	 * Hook up the extension's admin-side actions and filters.
 	 *
 	 * @since 1.0.0
 	 */
