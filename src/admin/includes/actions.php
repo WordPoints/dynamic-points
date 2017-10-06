@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Hook up the module's admin-side actions and filters.
+ * Hook up the extension's admin-side actions and filters.
  *
  * @package WordPoints_Dynamic_Points
  * @since   1.0.0

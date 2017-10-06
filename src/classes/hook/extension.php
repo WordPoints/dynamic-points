@@ -41,7 +41,7 @@ class WordPoints_Dynamic_Points_Hook_Extension
 
 		parent::__construct( $slug );
 
-		$this->rounding_methods = wordpoints_module( 'dynamic_points' )
+		$this->rounding_methods = wordpoints_extension( 'dynamic_points' )
 			->get_sub_app( 'rounding_methods' );
 
 		add_action(

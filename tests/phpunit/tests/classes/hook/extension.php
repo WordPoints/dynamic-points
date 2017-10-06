@@ -31,7 +31,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		$this->mock_apps();
 
 		wordpoints_dynamic_points_rounding_methods_init(
-			wordpoints_module( 'dynamic_points' )->get_sub_app( 'rounding_methods' )
+			wordpoints_extension( 'dynamic_points' )->get_sub_app( 'rounding_methods' )
 		);
 
 		$children = wordpoints_entities()->get_sub_app( 'children' );
@@ -146,7 +146,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		$this->mock_apps();
 
 		wordpoints_dynamic_points_rounding_methods_init(
-			wordpoints_module( 'dynamic_points' )->get_sub_app( 'rounding_methods' )
+			wordpoints_extension( 'dynamic_points' )->get_sub_app( 'rounding_methods' )
 		);
 
 		$children = wordpoints_entities()->get_sub_app( 'children' );
@@ -482,7 +482,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		);
 
 		wordpoints_dynamic_points_rounding_methods_init(
-			wordpoints_module( 'dynamic_points' )->get_sub_app( 'rounding_methods' )
+			wordpoints_extension( 'dynamic_points' )->get_sub_app( 'rounding_methods' )
 		);
 
 		wordpoints_entities()->get_sub_app( 'children' )->register(
@@ -589,7 +589,7 @@ class WordPoints_Dynamic_Points_Hook_Extension_Test
 		);
 
 		wordpoints_dynamic_points_rounding_methods_init(
-			wordpoints_module( 'dynamic_points' )->get_sub_app( 'rounding_methods' )
+			wordpoints_extension( 'dynamic_points' )->get_sub_app( 'rounding_methods' )
 		);
 
 		wordpoints_entities()->get_sub_app( 'children' )->register(

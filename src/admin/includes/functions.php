@@ -16,8 +16,8 @@
  */
 function wordpoints_dynamic_points_register_admin_scripts() {
 
-	$version = WordPoints_Modules::get_data( __FILE__, 'version' );
-	$assets_url = wordpoints_modules_url( '/assets', dirname( __FILE__ ) );
+	$version = wordpoints_get_extension_version( __FILE__ );
+	$assets_url = wordpoints_extensions_url( '/assets', dirname( __FILE__ ) );
 	$suffix = SCRIPT_DEBUG ? '' : '.min';
 	$manifested_suffix = SCRIPT_DEBUG ? '.manifested' : '.min';
 

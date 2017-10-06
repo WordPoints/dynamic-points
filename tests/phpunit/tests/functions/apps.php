@@ -16,31 +16,31 @@ class WordPoints_Dynamic_Points_Apps_Functions_Test
 	extends WordPoints_PHPUnit_TestCase {
 
 	/**
-	 * Test the module app registration function.
+	 * Test the extension app registration function.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @covers ::wordpoints_dynamic_points_modules_app_init
 	 */
-	public function test_modules() {
+	public function test_extensions() {
 
 		$this->mock_apps();
 
-		$modules = new WordPoints_App( 'modules' );
+		$extensions = new WordPoints_App( 'extensions' );
 
-		wordpoints_dynamic_points_modules_app_init( $modules );
+		wordpoints_dynamic_points_modules_app_init( $extensions );
 
-		$this->assertTrue( $modules->sub_apps()->is_registered( 'dynamic_points' ) );
+		$this->assertTrue( $extensions->sub_apps()->is_registered( 'dynamic_points' ) );
 	}
 
 	/**
-	 * Test the module apps registration function.
+	 * Test the extension apps registration function.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @covers ::wordpoints_dynamic_points_apps_init
 	 */
-	public function test_module_apps() {
+	public function test_extension_apps() {
 
 		$this->mock_apps();
 

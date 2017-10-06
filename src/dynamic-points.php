@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Main file of the module.
+ * Main file of the extension.
  *
  * ---------------------------------------------------------------------------------|
  * Copyright 2017  J.D. Grimes  (email : jdg@codesymphony.co)
@@ -21,25 +21,25 @@
  * ---------------------------------------------------------------------------------|
  *
  * @package WordPoints_Dynamic_Points
- * @version 1.0.0
+ * @version 1.0.1
  * @author  J.D. Grimes <jdg@codesymphony.co>
  * @license GPLv2+
  */
 
-WordPoints_Modules::register(
+wordpoints_register_extension(
 	'
-		Module Name: Dynamic Points
-		Author:      J.D. Grimes
-		Author URI:  https://codesymphony.co/
-		Module URI:  https://wordpoints.org/modules/dynamic-points/
-		Version:     1.0.0
-		License:     GPLv2+
-		Description: Let the number of points awarded by a reaction be dynamically calculated at the time of the event.
-		Text Domain: wordpoints-dynamic-points
-		Domain Path: /languages
-		Channel:     wordpoints.org
-		ID:          977
-		Namespace:   Dynamic_Points
+		Extension Name: Dynamic Points
+		Author:         J.D. Grimes
+		Author URI:     https://codesymphony.co/
+		Extension URI:  https://wordpoints.org/extensions/dynamic-points/
+		Version:        1.0.1
+		License:        GPLv2+
+		Description:    Let the number of points awarded by a reaction be dynamically calculated at the time of the event.
+		Text Domain:    wordpoints-dynamic-points
+		Domain Path:    /languages
+		Server:         wordpoints.org
+		ID:             977
+		Namespace:      Dynamic_Points
 	'
 	, __FILE__
 );
@@ -47,14 +47,14 @@ WordPoints_Modules::register(
 WordPoints_Class_Autoloader::register_dir( dirname( __FILE__ ) . '/classes/' );
 
 /**
- * The module's functions.
+ * The extension's functions.
  *
  * @since 1.0.0
  */
 require_once dirname( __FILE__ ) . '/includes/functions.php';
 
 /**
- * Hook up the module's actions and filters.
+ * Hook up the extension's actions and filters.
  *
  * @since 1.0.0
  */
@@ -63,14 +63,14 @@ require_once dirname( __FILE__ ) . '/includes/actions.php';
 if ( is_admin() ) {
 
 	/**
-	 * The module's admin-side functions.
+	 * The extension's admin-side functions.
 	 *
 	 * @since 1.0.0
 	 */
 	require_once dirname( __FILE__ ) . '/admin/includes/functions.php';
 
 	/**
-	 * Hook up the module's admin-side actions and filters.
+	 * Hook up the extension's admin-side actions and filters.
 	 *
 	 * @since 1.0.0
 	 */
