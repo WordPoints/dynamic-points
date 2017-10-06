@@ -151,7 +151,7 @@ function wordpoints_dynamic_points_htgp_shortcode_reaction_points(
 }
 
 /**
- * The the list of arg titles from a hook arg hierarchy.
+ * The list of arg titles from a hook arg hierarchy.
  *
  * @since 1.0.0
  *
