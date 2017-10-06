@@ -21,7 +21,7 @@
  * ---------------------------------------------------------------------------------|
  *
  * @package WordPoints_Dynamic_Points
- * @version 1.0.0
+ * @version 1.0.1
  * @author  J.D. Grimes <jdg@codesymphony.co>
  * @license GPLv2+
  */
@@ -32,7 +32,7 @@ wordpoints_register_extension(
 		Author:         J.D. Grimes
 		Author URI:     https://codesymphony.co/
 		Extension URI:  https://wordpoints.org/extensions/dynamic-points/
-		Version:        1.0.0
+		Version:        1.0.1
 		License:        GPLv2+
 		Description:    Let the number of points awarded by a reaction be dynamically calculated at the time of the event.
 		Text Domain:    wordpoints-dynamic-points
